@@ -4,12 +4,14 @@ import ProductSection from '@/components/ProductSection';
 import CustomerReviews from '@/components/CustomerReviews';
 import InstagramGallery from '@/components/InstagramGallery';
 import Newsletter from '@/components/Newsletter';
+import FashionCoverflow from '@/components/FashionCoverflow';
 
 export default function HomePage() {
   return (
     <>
       <Hero />
       <FeaturedCategories />
+      <FashionCoverflow />
       <ProductSection
         eyebrow="What's Hot"
         title="Trending Collection"

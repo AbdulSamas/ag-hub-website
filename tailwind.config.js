@@ -40,6 +40,12 @@ export default {
         secondary: '#666666',
         cream: '#FAFAF7',
         sand: '#F7F5F2',
+        // shadcn tokens used by ui/ components
+        background: '#FAFAF7',
+        foreground: '#1A1A1A',
+        muted: '#F7F5F2',
+        'muted-foreground': '#666666',
+        ring: '#0035AD',
       },
       borderRadius: {
         '2xl': '16px',
@@ -61,6 +67,7 @@ export default {
         float: 'float 7s ease-in-out infinite',
         shimmer: 'shimmer 3s linear infinite',
         'fade-up': 'fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards',
+        'fade-in': 'fadeIn 0.3s ease-out forwards',
       },
       keyframes: {
         float: {
@@ -74,6 +81,10 @@ export default {
         fadeUp: {
           '0%': { opacity: '0', transform: 'translateY(24px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
       },
       letterSpacing: {
