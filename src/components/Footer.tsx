@@ -26,17 +26,19 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="bg-ink text-white">
+    <footer className="relative border-t border-white/10 bg-black/40 backdrop-blur-sm">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 py-16 sm:py-20">
         {/* Top section */}
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-10 sm:gap-12 pb-12 sm:pb-16 border-b border-white/10">
           {/* Brand column */}
           <div className="col-span-2 lg:col-span-2">
             <Link to="/" className="inline-block mb-5">
-              <span className="clash text-[24px] sm:text-[26px] font-bold tracking-tight text-white">
-                AG<span className="text-accent">HUB</span>
-              </span>
-            </Link>
+  <img
+    src="/images/image.png"
+    alt="AGHUB"
+    className="h-16 w-auto object-contain"
+  />
+</Link>
             <p className="text-white/45 text-[13px] leading-relaxed mb-6 max-w-xs font-light">
               Elevating everyday fashion with premium quality, luxury aesthetics, and sustainable practices. Style that speaks.
             </p>

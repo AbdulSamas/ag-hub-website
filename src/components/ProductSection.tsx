@@ -11,7 +11,7 @@ type Props = {
   subtitle?: string;
   filter: 'is_featured' | 'is_new' | 'is_best_seller' | 'is_on_sale';
   limit?: number;
-  bg?: 'cream' | 'sand';
+  bg?: 'default';
   viewAllLink?: string;
 };
 
@@ -21,7 +21,6 @@ export default function ProductSection({
   subtitle,
   filter,
   limit = 8,
-  bg = 'cream',
   viewAllLink = '/shop',
 }: Props) {
   const [products, setProducts] = useState<Product[]>([]);
@@ -40,10 +39,8 @@ export default function ProductSection({
     })();
   }, [filter, limit]);
 
-  const bgClass = bg === 'sand' ? 'bg-sand' : 'bg-cream';
-
   return (
-    <section className={`py-20 sm:py-28 px-4 sm:px-6 lg:px-10 ${bgClass}`}>
+    <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-10">
       <div className="max-w-[1280px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -53,17 +50,17 @@ export default function ProductSection({
           className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 sm:mb-14 gap-4"
         >
           <div>
-            <span className="text-[11px] font-medium text-primary tracking-[0.2em] uppercase mb-3 block">
+            <span className="text-[11px] font-medium text-accent tracking-[0.2em] uppercase mb-3 block">
               {eyebrow}
             </span>
-            <h2 className="clash text-[32px] sm:text-[42px] font-bold leading-tight text-ink">{title}</h2>
+            <h2 className="clash text-[32px] sm:text-[42px] font-bold leading-tight text-white">{title}</h2>
             {subtitle && (
-              <p className="text-secondary mt-3 text-[14px] max-w-md font-light">{subtitle}</p>
+              <p className="text-white/50 mt-3 text-[14px] max-w-md font-light">{subtitle}</p>
             )}
           </div>
           <Link
             to={viewAllLink}
-            className="inline-flex items-center gap-2 text-[13px] font-medium text-ink/60 hover:text-primary transition-colors link-underline shrink-0"
+            className="inline-flex items-center gap-2 text-[13px] font-medium text-white/60 hover:text-accent transition-colors link-underline shrink-0"
           >
             View All <ArrowRight size={15} />
           </Link>
@@ -73,9 +70,9 @@ export default function ProductSection({
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {Array.from({ length: 4 }).map((_, i) => (
               <div key={i} className="animate-pulse">
-                <div className="rounded-[24px] bg-ink/5 aspect-[3/4] mb-3" />
-                <div className="h-3 bg-ink/5 rounded mb-2 w-1/3" />
-                <div className="h-4 bg-ink/5 rounded w-2/3" />
+                <div className="rounded-[24px] bg-white/10 aspect-[3/4] mb-3" />
+                <div className="h-3 bg-white/10 rounded mb-2 w-1/3" />
+                <div className="h-4 bg-white/10 rounded w-2/3" />
               </div>
             ))}
           </div>

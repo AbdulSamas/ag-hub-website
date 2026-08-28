@@ -53,7 +53,7 @@ const itemVariants = {
 
 export default function FeaturedCategories() {
   return (
-    <section id="categories" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-10 bg-cream">
+    <section id="categories" className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-10">
       <div className="max-w-[1280px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -63,16 +63,16 @@ export default function FeaturedCategories() {
           className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 sm:mb-14 gap-4"
         >
           <div>
-            <span className="text-[11px] font-medium text-primary tracking-[0.2em] uppercase mb-3 block">
+            <span className="text-[11px] font-medium text-accent tracking-[0.2em] uppercase mb-3 block">
               Browse
             </span>
-            <h2 className="clash text-[32px] sm:text-[42px] font-bold leading-tight text-ink">
+            <h2 className="clash text-[32px] sm:text-[42px] font-bold leading-tight text-white">
               Featured Categories
             </h2>
           </div>
           <Link
             to="/shop"
-            className="inline-flex items-center gap-2 text-[13px] font-medium text-ink/60 hover:text-primary transition-colors link-underline"
+            className="inline-flex items-center gap-2 text-[13px] font-medium text-white/60 hover:text-accent transition-colors link-underline"
           >
             View All <ArrowRight size={15} />
           </Link>
@@ -88,14 +88,14 @@ export default function FeaturedCategories() {
           {categories.map((cat) => (
             <motion.div key={cat.title} variants={itemVariants} whileHover={{ y: -6 }}>
               <Link to={cat.path} className="group block cursor-pointer">
-                <div className="relative rounded-[24px] overflow-hidden aspect-[3/4] bg-white shadow-card lift mb-3">
+                <div className="relative rounded-[24px] overflow-hidden aspect-[3/4] bg-white/5 ring-1 ring-white/10 lift mb-3">
                   <img
                     src={cat.img}
                     alt={cat.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
                     <p className="text-white font-semibold text-[15px] sm:text-[16px] leading-tight">{cat.title}</p>
                     <p className="text-white/70 text-[11px] font-medium mt-0.5 flex items-center gap-1">

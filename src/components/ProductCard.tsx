@@ -55,7 +55,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
       onClick={handleClick}
       className="group cursor-pointer"
     >
-      <div className="relative rounded-[24px] overflow-hidden aspect-[3/4] bg-white shadow-card mb-3">
+      <div className="relative rounded-[24px] overflow-hidden aspect-[3/4] bg-white/5 border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.35)] mb-3">
         <img
           src={product.image_url || ""}
           alt={product.name}
@@ -72,7 +72,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
 
         {/* New Badge */}
         {!product.is_on_sale && product.is_new && (
-          <div className="absolute top-3 left-3 bg-white text-ink text-[10px] font-medium px-2.5 py-1 rounded-full shadow-soft">
+          <div className="absolute top-3 left-3 bg-white/90 text-black text-[10px] font-medium px-2.5 py-1 rounded-full shadow-soft">
             New
           </div>
         )}
@@ -83,7 +83,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
           className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-sm shadow-soft transition-all duration-300 ${
             isWishlisted(product.id)
               ? "bg-red-500 text-white"
-              : "bg-white/80 hover:bg-accent hover:text-primary"
+              : "bg-black/40 text-white backdrop-blur-md border border-white/10 hover:bg-accent hover:text-primary"
           }`}
         >
           <Heart
@@ -95,7 +95,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
         {/* Add To Cart */}
         <button
           onClick={handleAddToCart}
-          className="absolute bottom-3 left-3 right-3 bg-ink text-white text-[12px] font-medium py-2.5 rounded-full flex items-center justify-center gap-2 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300"
+          className="absolute bottom-3 left-3 right-3 bg-white text-black text-[12px] font-medium py-2.5 rounded-full flex items-center justify-center gap-2 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300"
         >
           <ShoppingBag size={13} />
           Add to Cart
@@ -103,31 +103,31 @@ export default function ProductCard({ product, index = 0 }: Props) {
       </div>
 
       <div className="px-1">
-        <p className="text-[10px] text-secondary font-medium uppercase tracking-wider mb-1">
+        <p className="text-[10px] text-white/40 font-medium uppercase tracking-wider mb-1">
           {product.category}
         </p>
 
-        <h3 className="font-medium text-[13px] text-ink leading-snug mb-1.5 line-clamp-1">
+        <h3 className="font-medium text-[13px] text-white leading-snug mb-1.5 line-clamp-1">
           {product.name}
         </h3>
 
         <div className="flex items-center gap-1.5 mb-1.5">
           <Star size={11} className="fill-accent text-accent" />
-          <span className="text-[11px] text-secondary">
+          <span className="text-[11px] text-white/60">
             {product.rating}
           </span>
-          <span className="text-[11px] text-secondary/50">
+          <span className="text-[11px] text-white/60">
             ({product.reviews_count})
           </span>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="font-semibold text-[14px] text-ink">
+          <span className="font-semibold text-[14px] text-white">
             {formatAED(product.price)}
           </span>
 
           {product.original_price && (
-            <span className="text-[12px] text-secondary/50 line-through">
+            <span className="text-[12px] text-white/30 line-through">
               {formatAED(product.original_price)}
             </span>
           )}

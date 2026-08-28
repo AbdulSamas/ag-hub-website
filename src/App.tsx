@@ -15,7 +15,6 @@ import NotFoundPage from "@/pages/NotFoundPage";
 import ProfilePage from "@/pages/ProfilePage";
 import OrdersPage from "@/pages/OrdersPage";
 
-
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
@@ -27,7 +26,7 @@ import Offers from "./pages/admin/Offers";
 import Users from "./pages/admin/Users";
 import LoginPage from "@/pages/LoginPage";
 import SignupPage from "@/pages/SignupPage";
-
+import { SilkBackground } from "./components/ui/silk-background-animation";
 
 function App() {
   const location = useLocation();
@@ -36,50 +35,146 @@ function App() {
   return (
     <WishlistProvider>
       <CartProvider>
-        <div className="min-h-screen bg-cream overflow-x-hidden flex flex-col">
-          {!isAdmin && <Navbar />}
+        <div className="relative min-h-screen overflow-x-hidden bg-[#050505] text-white">
 
-          <main className="flex-1">
-           <Routes>
-  <Route path="/" element={<HomePage />} />
-  <Route path="/shop" element={<ShopPage />} />
-  <Route path="/shop/:category" element={<ShopPage />} />
-  <Route path="/product/:slug" element={<ProductDetailPage />} />
-  <Route path="/checkout" element={<CheckoutPage />} />
-  <Route path="/wishlist" element={<WishlistPage />} />
+          {/* =========================================
+              FULL WEBSITE SILK BACKGROUND
+          ========================================= */}
+          {!isAdmin && (
+            <div className="pointer-events-none fixed inset-0 z-0">
+              <SilkBackground />
+            </div>
+          )}
 
-<Route path="/profile" element={<ProfilePage />} />
-<Route path="/orders" element={<OrdersPage />} />
+          {/* =========================================
+              DARK OVERLAY
+          ========================================= */}
+          {!isAdmin && (
+            <div className="pointer-events-none fixed inset-0 z-[1] bg-black/60" />
+          )}
 
-  {/* User Auth */}
-  <Route path="/login" element={<LoginPage />} />
-  <Route path="/signup" element={<SignupPage />} />
+          {/* =========================================
+              WEBSITE CONTENT
+          ========================================= */}
+          <div className="relative z-10 flex min-h-screen flex-col">
 
-  {/* Admin Login */}
-  <Route path="/admin/login" element={<AdminLogin />} />
+            {!isAdmin && <Navbar />}
 
-  {/* Admin Routes */}
-  <Route path="/admin" element={<AdminLayout />}>
-    <Route index element={<Dashboard />} />
-    <Route path="dashboard" element={<Dashboard />} />
+            <main className="flex-1">
+              <Routes>
 
-    <Route path="products" element={<Products />} />
-    <Route path="products/new" element={<AddProduct />} />
-    <Route path="products/edit/:id" element={<AddProduct />} />
+                {/* ================= HOME ================= */}
+                <Route path="/" element={<HomePage />} />
 
-    <Route path="orders" element={<Orders />} />
-    <Route path="orders/:id" element={<OrderDetails />} />
+                {/* ================= SHOP ================= */}
+                <Route path="/shop" element={<ShopPage />} />
+                <Route path="/shop/:category" element={<ShopPage />} />
 
-    <Route path="offers" element={<Offers />} />
-    <Route path="users" element={<Users />} />
-  </Route>
+                {/* ================= PRODUCT ================= */}
+                <Route
+                  path="/product/:slug"
+                  element={<ProductDetailPage />}
+                />
 
-  <Route path="*" element={<NotFoundPage />} />
-</Routes>
-          </main>
+                {/* ================= CHECKOUT ================= */}
+                <Route
+                  path="/checkout"
+                  element={<CheckoutPage />}
+                />
 
-          {!isAdmin && <Footer />}
-          {!isAdmin && <CartDrawer />}
+                {/* ================= WISHLIST ================= */}
+                <Route
+                  path="/wishlist"
+                  element={<WishlistPage />}
+                />
+
+                {/* ================= PROFILE ================= */}
+                <Route
+                  path="/profile"
+                  element={<ProfilePage />}
+                />
+
+                {/* ================= ORDERS ================= */}
+                <Route
+                  path="/orders"
+                  element={<OrdersPage />}
+                />
+
+                {/* ================= USER AUTH ================= */}
+                <Route
+                  path="/login"
+                  element={<LoginPage />}
+                />
+
+                <Route
+                  path="/signup"
+                  element={<SignupPage />}
+                />
+
+                {/* ================= ADMIN LOGIN ================= */}
+                <Route
+                  path="/admin/login"
+                  element={<AdminLogin />}
+                />
+
+                {/* ================= ADMIN ================= */}
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<Dashboard />} />
+
+                  <Route
+                    path="dashboard"
+                    element={<Dashboard />}
+                  />
+
+                  <Route
+                    path="products"
+                    element={<Products />}
+                  />
+
+                  <Route
+                    path="products/new"
+                    element={<AddProduct />}
+                  />
+
+                  <Route
+                    path="products/edit/:id"
+                    element={<AddProduct />}
+                  />
+
+                  <Route
+                    path="orders"
+                    element={<Orders />}
+                  />
+
+                  <Route
+                    path="orders/:id"
+                    element={<OrderDetails />}
+                  />
+
+                  <Route
+                    path="offers"
+                    element={<Offers />}
+                  />
+
+                  <Route
+                    path="users"
+                    element={<Users />}
+                  />
+                </Route>
+
+                {/* ================= 404 ================= */}
+                <Route
+                  path="*"
+                  element={<NotFoundPage />}
+                />
+
+              </Routes>
+            </main>
+
+            {!isAdmin && <Footer />}
+            {!isAdmin && <CartDrawer />}
+
+          </div>
         </div>
       </CartProvider>
     </WishlistProvider>
