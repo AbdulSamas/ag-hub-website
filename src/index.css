@@ -139,3 +139,16 @@
 input, select, textarea {
   color-scheme: dark;
 }
+video:fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover !important;
+  background: #000;
+}
+
+video:-webkit-full-screen {
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover !important;
+  background: #000;
+}

@@ -11,7 +11,7 @@ type Props = {
   subtitle?: string;
   filter: 'is_featured' | 'is_new' | 'is_best_seller' | 'is_on_sale';
   limit?: number;
-  bg?: 'default';
+  bg?: 'default' | 'sand' | 'cream';
   viewAllLink?: string;
 };
 

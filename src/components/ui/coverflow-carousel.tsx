@@ -228,7 +228,7 @@ export function CoverflowCarousel({
               nudge(1);
             }
           }}
-          className="cursor-grab overflow-hidden py-10 outline-none ring-ring focus-visible:ring-2 active:cursor-grabbing"
+          className="cursor-grab overflow-hidden py-2 sm:py-10 outline-none ring-ring focus-visible:ring-2 active:cursor-grabbing"
           style={{ perspective: `calc(var(--cf-card) * ${perspective})`, touchAction: "pan-y" }}
         >
           <div className="relative select-none" style={{ height: "var(--cf-card)", transformStyle: "preserve-3d" }}>
@@ -266,15 +266,22 @@ export function CoverflowCarousel({
       </div>
 
       {showCaption && active?.title && (
-        <div key={selected} className="mt-2 flex flex-col items-center px-6 duration-300 animate-in fade-in">
-          <p className="text-[15px] font-semibold tracking-tight text-foreground">{active.title}</p>
-          {active.subtitle && <p className="mt-1 text-[13px] text-muted-foreground">{active.subtitle}</p>}
+        <div key={selected} className="mt-1 flex flex-col items-center px-4 sm:px-6 duration-300 animate-in fade-in">
+         <p className="text-[15px] font-semibold tracking-tight text-white/90">
+  {active.title}
+</p>
+
+{active.subtitle && (
+  <p className="mt-1 text-[13px] text-white/50">
+    {active.subtitle}
+  </p>
+)}
           {active.meta && active.meta.length > 0 && (
-            <dl className="mt-10 w-full max-w-[230px] text-[12px]">
+            <dl className="mt-3 sm:mt-10 w-full max-w-[230px] text-[12px]">
               {active.meta.map((row) => (
-                <div key={row.label} className="flex justify-between py-[5px]">
-                  <dt className="text-muted-foreground">{row.label}</dt>
-                  <dd className="font-medium text-foreground">{row.value}</dd>
+                <div key={row.label} className="flex justify-between py-[2px]">
+                 <dt className="text-white/40">{row.label}</dt>
+<dd className="font-medium text-white/75">{row.value}</dd>
                 </div>
               ))}
             </dl>
@@ -283,7 +290,7 @@ export function CoverflowCarousel({
       )}
 
       {showPagination && (
-        <div className="mt-6 flex items-center justify-center gap-2">
+        <div className="mt-4 sm:mt-6 flex items-center justify-center gap-2">
           {slides.map((_, index) => (
             <button key={index} type="button" aria-label={`Go to slide ${index + 1}`} aria-current={index === selected} onClick={() => goTo(index)} className={cn("size-2 rounded-full bg-foreground transition-opacity", index === selected ? "opacity-100" : "opacity-30")} />
           ))}

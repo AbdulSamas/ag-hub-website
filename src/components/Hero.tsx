@@ -167,14 +167,40 @@ function MarqueeCard({
   onHoverEnd,
   onSoundToggle,
 }: MarqueeCardProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleFullscreen = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+      } else if (video.requestFullscreen) {
+        await video.requestFullscreen();
+      } else {
+        const iosVideo = video as HTMLVideoElement & {
+          webkitEnterFullscreen?: () => void;
+        };
+
+        iosVideo.webkitEnterFullscreen?.();
+      }
+    } catch (error) {
+      console.error('Fullscreen error:', error);
+    }
+  };
+
   return (
     <div
       className={`group relative flex-shrink-0 overflow-hidden rounded-[22px] border border-white/10 bg-black transition-transform duration-300 ease-out ${
         size === 'lg'
           ? 'w-[260px] h-[375px] sm:w-[300px] sm:h-[375px]'
           : 'w-[180px] h-[275px] sm:w-[180px] sm:h-[275px]'
-      } 
-      ${isHovered ? 'z-[100] scale-110' : 'z-0 scale-100'}${
+      }
+      ${isHovered ? 'z-[100] scale-110' : 'z-0 scale-100'}
+      ${
         hidden
           ? 'opacity-0 pointer-events-none border-transparent bg-transparent'
           : 'opacity-100'
@@ -183,18 +209,70 @@ function MarqueeCard({
       onMouseLeave={onHoverEnd}
     >
       <video
-  src={src}
-  className="absolute inset-0 w-full h-full object-cover"
-  autoPlay
-  loop
-  muted={isMuted}
-  playsInline
-  preload="metadata"
-  controls={isHovered}
-controlsList="nodownload"
-/>
+        ref={videoRef}
+        src={src}
+        className="absolute inset-0 w-full h-full object-cover [&&:fullscreen]:w-screen [&&:fullscreen]:h-screen [&&:fullscreen]:object-cover"
+        autoPlay
+        loop
+        muted={isMuted}
+        playsInline
+        preload="metadata"
+      />
 
-      
+      {/* CUSTOM CONTROLS - ONLY SOUND + FULLSCREEN */}
+      <div
+        className={`
+          absolute bottom-3 right-3 z-30 flex items-center gap-2
+          transition-opacity duration-200
+          ${
+            isHovered
+              ? 'opacity-100'
+              : 'opacity-0 pointer-events-none'
+          }
+          sm:group-hover:opacity-100 sm:group-hover:pointer-events-auto
+        `}
+      >
+        {/* SOUND */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onSoundToggle?.();
+          }}
+          className="w-9 h-9 flex items-center justify-center rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-white hover:bg-black/90 transition"
+          aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+        >
+          {isMuted ? (
+            <VolumeX size={16} />
+          ) : (
+            <Volume2 size={16} />
+          )}
+        </button>
+
+        {/* FULLSCREEN */}
+        <button
+          type="button"
+          onClick={handleFullscreen}
+          className="w-9 h-9 flex items-center justify-center rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-white hover:bg-black/90 transition"
+          aria-label="Fullscreen"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M8 3H5a2 2 0 0 0-2 2v3" />
+            <path d="M16 3h3a2 2 0 0 1 2 2v3" />
+            <path d="M8 21H5a2 2 0 0 1-2-2v-3" />
+            <path d="M16 21h3a2 2 0 0 0 2-2v-3" />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }
@@ -260,6 +338,7 @@ offsetRef.current -= speed;
                 current === i ? null : i
               );
             }}
+           
           />
         ))}
       </div>
@@ -332,7 +411,7 @@ export default function Hero() {
         handleMouseLeave();
         setCursorVisible(false);
       }}
-      className="relative min-h-screen bg-transparent overflow-hidden flex flex-col"
+      className="relative min-h-0 h-auto sm:min-h-screen bg-transparent overflow-hidden flex flex-col"
     >
       {/* ── Background glows ─────────────────────────── */}
       <div
@@ -377,7 +456,7 @@ export default function Hero() {
       {/* ── Content ─────────────────────────────────── */}
       <motion.div
         style={{ y: yScroll, opacity: opacityScroll }}
-        className="relative z-30 flex-1 w-screen max-w-none flex items-center pt-[100px] sm:pt-[110px] pb-10"
+        className="relative z-30 flex-1 w-screen max-w-none flex items-center pt-0 sm:pt-[110px] pb-10"
       >
        
 
@@ -391,23 +470,7 @@ export default function Hero() {
        
       </motion.div>
 
-      {/* ── Scroll indicator ─────────────────────────── */}
-      <motion.div
-        style={{ opacity: opacityScroll }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2"
-      >
-        <span className="text-[10px] text-white/30 font-medium tracking-[0.2em] uppercase">Scroll</span>
-        <div className="w-px h-10 bg-gradient-to-b from-white/30 to-transparent">
-          <motion.div
-            className="w-px h-3 bg-accent"
-            animate={{ y: [0, 28, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </div>
-      </motion.div>
+      
     </section>
   );
 }

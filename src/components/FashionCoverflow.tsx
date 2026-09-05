@@ -43,9 +43,9 @@ const slides: CoverflowSlide[] = [
 
 export default function FashionCoverflow() {
   return (
-    <section className="overflow-hidden bg-[#111318] px-4 py-20 text-white sm:px-6 sm:py-28 lg:px-10">
+   <section className="overflow-hidden px-4 pt-0 pb-6 text-white sm:px-6 sm:pt-6 sm:pb-10 lg:px-10">
       <div className="mx-auto max-w-[1280px]">
-        <div className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+        <div className="grid items-start gap-2 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -56,15 +56,15 @@ export default function FashionCoverflow() {
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.2em] text-accent">
               <Sparkles size={12} /> The editorial edit
             </div>
-            <h2 className="clash text-[36px] font-bold leading-[1.05] sm:text-[48px]">
+            <h2 className="clash text-[36px] font-bold leading-[1.05] sm:text-[48px]"> 
               Style in motion.
             </h2>
-            <p className="mt-5 text-[14px] leading-relaxed text-white/55">
+            <p className="mt-3 text-[14px] leading-relaxed text-white/55">
               Discover the silhouettes, textures, and finishing touches shaping this season at AG HUB.
             </p>
             <Link
               to="/shop"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-[13px] font-semibold text-primary transition-transform hover:-translate-y-0.5"
+              className="mt-5 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-[13px] font-semibold text-primary transition-transform hover:-translate-y-0.5"
             >
               Shop the edit <ArrowRight size={15} />
             </Link>
