@@ -456,7 +456,7 @@ export default function Hero() {
       {/* ── Content ─────────────────────────────────── */}
       <motion.div
         style={{ y: yScroll, opacity: opacityScroll }}
-        className="relative z-30 flex-1 w-screen max-w-none flex items-center pt-0 sm:pt-[110px] pb-10"
+        className="relative z-30 flex-1 w-screen max-w-none flex items-center pt-[110px] sm:pt-[110px] pb-10"
       >
        
 

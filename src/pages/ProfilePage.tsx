@@ -1,5 +1,16 @@
 import { useEffect, useState } from "react";
-import { User, Mail, Phone, MapPin } from "lucide-react";
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Camera,
+  Pencil,
+  Check,
+  X,
+  ShoppingBag,
+  ShieldCheck,
+} from "lucide-react";
 
 import {
   getCurrentUser,
@@ -61,37 +72,35 @@ export default function ProfilePage() {
     setLoading(false);
   }
 
-  
   async function saveProfile() {
-  try {
-    setSaving(true);
+    try {
+      setSaving(true);
 
-    const { error } = await updateProfile(userId, {
-      full_name: profile.full_name,
-      phone: profile.phone,
-      address: profile.address,
-      city: profile.city,
-      country: profile.country,
-    });
+      const { error } = await updateProfile(userId, {
+        full_name: profile.full_name,
+        phone: profile.phone,
+        address: profile.address,
+        city: profile.city,
+        country: profile.country,
+      });
 
-    if (error) {
-      console.error(error);
-      alert(error.message);
-      return;
+      if (error) {
+        console.error(error);
+        alert(error.message);
+        return;
+      }
+
+      setEditing(false);
+      await loadProfile();
+
+      alert("Profile Updated Successfully!");
+    } catch (err) {
+      console.error(err);
+      alert("Unable to update profile.");
+    } finally {
+      setSaving(false);
     }
-
-    alert("Profile Updated Successfully!");
-
-    setEditing(false);
-
-    await loadProfile();
-  } catch (err) {
-    console.error(err);
-    alert("Unable to update profile.");
-  } finally {
-    setSaving(false);
   }
-}
 
   async function changePhoto(
     e: React.ChangeEvent<HTMLInputElement>
@@ -117,176 +126,548 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
-        Loading...
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border border-[#C9A45C]/30 border-t-[#C9A45C] rounded-full animate-spin mx-auto mb-4" />
+
+          <p className="text-white/40 text-xs tracking-[0.25em] uppercase">
+            Loading Account
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f8f6] pt-28 pb-20 px-5">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-xl p-8">
+    <div className="min-h-screen text-white pt-28 pb-20 px-4 sm:px-6">
 
-          <div className="flex justify-end mb-6 gap-3">
-            <button
-              onClick={() => setEditing(!editing)}
-              className="bg-black text-white px-5 py-2 rounded-xl"
-            >
-              {editing ? "Cancel" : "Edit Profile"}
-            </button>
+      <div className="max-w-5xl mx-auto">
 
-            {editing && (
-              <button
-                onClick={saveProfile}
-                disabled={saving}
-                className="bg-green-600 text-white px-5 py-2 rounded-xl"
-              >
-                {saving ? "Saving..." : "Save"}
-              </button>
-            )}
+        {/* Header */}
+        <div className="mb-8">
+
+          <p className="text-[#C9A45C] text-[10px] sm:text-xs tracking-[0.35em] uppercase font-medium mb-3">
+            AG HUB / Account
+          </p>
+
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5">
+
+            <div>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-[-0.03em]">
+                My Account
+              </h1>
+
+              <p className="mt-2 text-sm text-white/40">
+                Manage your personal information and account details.
+              </p>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex items-center gap-2">
+
+              {!editing ? (
+                <button
+                  onClick={() => setEditing(true)}
+                  className="
+                    group
+                    h-11
+                    px-5
+                    rounded-full
+                    border border-white/10
+                    bg-white/[0.03]
+                    hover:bg-[#C9A45C]
+                    hover:text-black
+                    hover:border-[#C9A45C]
+                    transition-all duration-300
+                    flex items-center gap-2
+                    text-sm font-medium
+                  "
+                >
+                  <Pencil
+                    size={15}
+                    className="group-hover:scale-110 transition-transform"
+                  />
+
+                  Edit Profile
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => {
+                      setEditing(false);
+                      loadProfile();
+                    }}
+                    className="
+                      h-11
+                      px-5
+                      rounded-full
+                      border border-white/10
+                      text-white/60
+                      hover:text-white
+                      hover:bg-white/[0.05]
+                      transition
+                      flex items-center gap-2
+                      text-sm
+                    "
+                  >
+                    <X size={15} />
+                    Cancel
+                  </button>
+
+                  <button
+                    onClick={saveProfile}
+                    disabled={saving}
+                    className="
+                      h-11
+                      px-5
+                      rounded-full
+                      bg-[#C9A45C]
+                      text-black
+                      hover:bg-[#D8B875]
+                      transition
+                      flex items-center gap-2
+                      text-sm font-semibold
+                      disabled:opacity-50
+                    "
+                  >
+                    <Check size={15} />
+
+                    {saving ? "Saving..." : "Save Changes"}
+                  </button>
+                </>
+              )}
+
+            </div>
+          </div>
+        </div>
+
+
+        {/* Profile Section */}
+        <div className="
+          border-y border-white/[0.08]
+        ">
+
+          {/* Profile Header */}
+          <div className="
+            px-2 sm:px-6
+            py-8 sm:py-10
+            border-b border-white/[0.07]
+          ">
+
+            <div className="
+              flex
+              flex-col
+              sm:flex-row
+              items-center
+              sm:items-center
+              gap-6
+            ">
+
+              {/* Avatar */}
+              <div className="relative shrink-0">
+
+                <div className="
+                  w-28 h-28
+                  sm:w-32 sm:h-32
+                  rounded-full
+                  p-[2px]
+                  bg-gradient-to-br
+                  from-[#C9A45C]
+                  via-[#8c6d35]
+                  to-transparent
+                ">
+
+                  <div className="
+                    w-full h-full
+                    rounded-full
+                    overflow-hidden
+                    bg-black
+                    flex items-center justify-center
+                  ">
+
+                    {profile.profile_image ? (
+                      <img
+                        src={profile.profile_image}
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-4xl font-light text-[#C9A45C]">
+                        {profile.full_name
+                          ? profile.full_name.charAt(0).toUpperCase()
+                          : "U"}
+                      </span>
+                    )}
+
+                  </div>
+                </div>
+
+                {/* Camera */}
+                {editing && (
+                  <label
+                    className="
+                      absolute
+                      bottom-0
+                      right-0
+                      w-10 h-10
+                      rounded-full
+                      bg-[#C9A45C]
+                      text-black
+                      flex items-center justify-center
+                      cursor-pointer
+                      border-4 border-black
+                      hover:bg-[#D8B875]
+                      transition
+                    "
+                  >
+                    <Camera size={16} />
+
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={changePhoto}
+                      className="hidden"
+                    />
+                  </label>
+                )}
+
+              </div>
+
+
+              {/* User Info */}
+              <div className="text-center sm:text-left flex-1">
+
+                <p className="
+                  text-[10px]
+                  tracking-[0.3em]
+                  uppercase
+                  text-[#C9A45C]
+                  mb-2
+                ">
+                  Member
+                </p>
+
+                <h2 className="
+                  text-2xl
+                  sm:text-3xl
+                  font-light
+                  tracking-tight
+                ">
+                  {profile.full_name || "AG HUB Member"}
+                </h2>
+
+                <p className="text-sm text-white/40 mt-1">
+                  {profile.email}
+                </p>
+
+              </div>
+
+
+              {/* Orders */}
+              <div className="
+                min-w-[130px]
+                px-5 py-4
+                text-center
+                border border-white/[0.07]
+                rounded-2xl
+                bg-white/[0.02]
+              ">
+
+                <div className="flex justify-center mb-2">
+                  <ShoppingBag
+                    size={18}
+                    className="text-[#C9A45C]"
+                    strokeWidth={1.5}
+                  />
+                </div>
+
+                <p className="text-2xl font-light">
+                  {profile.total_orders}
+                </p>
+
+                <p className="
+                  text-[9px]
+                  uppercase
+                  tracking-[0.2em]
+                  text-white/35
+                  mt-1
+                ">
+                  Total Orders
+                </p>
+
+              </div>
+
+            </div>
           </div>
 
-          <div className="flex flex-col items-center mb-10">
 
-            {profile.profile_image ? (
-              <img
-                src={profile.profile_image}
-                alt=""
-                className="w-28 h-28 rounded-full object-cover"
+          {/* Personal Information */}
+          <div className="px-2 sm:px-6 py-8 sm:py-10">
+
+            <div className="flex items-center gap-3 mb-7">
+
+              <div className="w-7 h-px bg-[#C9A45C]/50" />
+
+              <h3 className="
+                text-xs
+                uppercase
+                tracking-[0.25em]
+                text-white/60
+              ">
+                Personal Information
+              </h3>
+
+            </div>
+
+
+            <div className="grid md:grid-cols-2 gap-5">
+
+              <ProfileField
+                icon={<User size={17} />}
+                label="Full Name"
+                value={profile.full_name}
+                editing={editing}
+                onChange={(value) =>
+                  setProfile({
+                    ...profile,
+                    full_name: value,
+                  })
+                }
               />
-            ) : (
-              <div className="w-28 h-28 rounded-full bg-gray-200 flex items-center justify-center text-5xl font-bold">
-                {profile.full_name
-                  ? profile.full_name.charAt(0).toUpperCase()
-                  : "U"}
-              </div>
-            )}
 
-            {editing && (
-              <label className="mt-4 cursor-pointer bg-black text-white px-4 py-2 rounded-lg">
-                Change Photo
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={changePhoto}
-                  className="hidden"
-                />
-              </label>
-            )}
 
-            <h1 className="text-3xl font-bold mt-5">
-              {profile.full_name || "User"}
-            </h1>
+              <ProfileField
+                icon={<Mail size={17} />}
+                label="Email Address"
+                value={profile.email}
+                editing={false}
+                disabled
+              />
 
-            <p className="text-gray-500">
-              {profile.email}
-            </p>
-          </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+              <ProfileField
+                icon={<Phone size={17} />}
+                label="Phone Number"
+                value={profile.phone}
+                editing={editing}
+                onChange={(value) =>
+                  setProfile({
+                    ...profile,
+                    phone: value,
+                  })
+                }
+              />
 
-            <div>
-              <label className="text-sm font-medium">
-                Full Name
-              </label>
 
-              <div className="flex items-center border rounded-xl mt-2 px-4 py-3">
-                <User size={18} className="text-gray-400" />
+              <ProfileField
+                icon={<MapPin size={17} />}
+                label="Address"
+                value={profile.address}
+                editing={editing}
+                onChange={(value) =>
+                  setProfile({
+                    ...profile,
+                    address: value,
+                  })
+                }
+              />
 
-                <input
-                  className="ml-3 flex-1 outline-none"
-                  value={profile.full_name}
-                  readOnly={!editing}
-                  onChange={(e) =>
-                    setProfile({
-                      ...profile,
-                      full_name: e.target.value,
-                    })
-                  }
-                />
-              </div>
+
+              <ProfileField
+                label="City"
+                value={profile.city}
+                editing={editing}
+                onChange={(value) =>
+                  setProfile({
+                    ...profile,
+                    city: value,
+                  })
+                }
+              />
+
+
+              <ProfileField
+                label="Country"
+                value={profile.country}
+                editing={editing}
+                onChange={(value) =>
+                  setProfile({
+                    ...profile,
+                    country: value,
+                  })
+                }
+              />
+
             </div>
 
-            <div>
-              <label className="text-sm font-medium">
-                Email
-              </label>
 
-              <div className="flex items-center border rounded-xl mt-2 px-4 py-3">
-                <Mail size={18} className="text-gray-400" />
+            {/* Account Status */}
+            <div className="
+              mt-8
+              pt-7
+              border-t border-white/[0.07]
+              flex items-center justify-between
+              gap-4
+            ">
 
-                <input
-                  className="ml-3 flex-1 outline-none bg-gray-100"
-                  value={profile.email}
-                  readOnly
-                />
+              <div className="flex items-center gap-3">
+
+                <div className="
+                  w-10 h-10
+                  rounded-xl
+                  bg-[#C9A45C]/[0.08]
+                  flex items-center justify-center
+                ">
+                  <ShieldCheck
+                    size={18}
+                    className="text-[#C9A45C]"
+                    strokeWidth={1.5}
+                  />
+                </div>
+
+                <div>
+                  <p className="text-sm font-medium">
+                    Account Secured
+                  </p>
+
+                  <p className="text-[11px] text-white/35 mt-0.5">
+                    Your account information is protected.
+                  </p>
+                </div>
+
               </div>
-            </div>
 
-            <div>
-              <label className="text-sm font-medium">
-                Phone
-              </label>
 
-              <div className="flex items-center border rounded-xl mt-2 px-4 py-3">
-                <Phone size={18} className="text-gray-400" />
-
-                <input
-                  className="ml-3 flex-1 outline-none"
-                  value={profile.phone}
-                  readOnly={!editing}
-                  onChange={(e) =>
-                    setProfile({
-                      ...profile,
-                      phone: e.target.value,
-                    })
-                  }
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="text-sm font-medium">
-                Address
-              </label>
-
-              <div className="flex items-center border rounded-xl mt-2 px-4 py-3">
-                <MapPin size={18} className="text-gray-400" />
-
-                <input
-                  className="ml-3 flex-1 outline-none"
-                  value={profile.address}
-                  readOnly={!editing}
-                  onChange={(e) =>
-                    setProfile({
-                      ...profile,
-                      address: e.target.value,
-                    })
-                  }
-                />
-              </div>
-            </div>
-
-          </div>
-
-          <div className="mt-8 bg-gray-100 rounded-2xl p-5">
-
-            <h3 className="font-semibold text-lg mb-2">
-              Statistics
-            </h3>
-
-            <p>
-              Total Orders :
-              <span className="font-bold ml-2">
-                {profile.total_orders}
+              <span className="
+                hidden sm:inline-flex
+                px-3 py-1.5
+                rounded-full
+                bg-emerald-500/10
+                text-emerald-400
+                text-[10px]
+                uppercase
+                tracking-[0.15em]
+              ">
+                Active
               </span>
-            </p>
+
+            </div>
 
           </div>
 
         </div>
+
+
+        {/* Footer */}
+        <div className="text-center mt-8">
+
+          <p className="
+            text-[9px]
+            tracking-[0.35em]
+            uppercase
+            text-white/20
+          ">
+            AG HUB • Premium Fashion
+          </p>
+
+        </div>
+
       </div>
+    </div>
+  );
+}
+
+
+/* ─────────────────────────────────────────────
+   Reusable Profile Field
+───────────────────────────────────────────── */
+
+function ProfileField({
+  icon,
+  label,
+  value,
+  editing,
+  onChange,
+  disabled = false,
+}: {
+  icon?: React.ReactNode;
+  label: string;
+  value: string;
+  editing: boolean;
+  onChange?: (value: string) => void;
+  disabled?: boolean;
+}) {
+  return (
+    <div>
+
+      <label className="
+        block
+        text-[10px]
+        uppercase
+        tracking-[0.2em]
+        text-white/35
+        mb-2
+      ">
+        {label}
+      </label>
+
+      <div
+        className={`
+          min-h-[52px]
+          flex items-center
+          gap-3
+          px-4
+          rounded-2xl
+          border
+          transition-all duration-300
+
+          ${
+            disabled
+              ? "bg-white/[0.02] border-white/[0.05]"
+              : editing
+              ? "bg-white/[0.035] border-[#C9A45C]/30 focus-within:border-[#C9A45C]/60"
+              : "bg-white/[0.02] border-white/[0.07]"
+          }
+        `}
+      >
+
+        {icon && (
+          <span
+            className={`
+              shrink-0
+              ${
+                editing && !disabled
+                  ? "text-[#C9A45C]"
+                  : "text-white/30"
+              }
+            `}
+          >
+            {icon}
+          </span>
+        )}
+
+        <input
+          type="text"
+          value={value}
+          readOnly={!editing || disabled}
+          onChange={(e) => onChange?.(e.target.value)}
+          placeholder={`Enter ${label.toLowerCase()}`}
+          className={`
+            w-full
+            bg-transparent
+            outline-none
+            text-sm
+
+            ${
+              disabled
+                ? "text-white/35 cursor-not-allowed"
+                : "text-white/85"
+            }
+          `}
+        />
+
+      </div>
+
     </div>
   );
 }

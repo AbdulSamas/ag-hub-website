@@ -277,7 +277,7 @@ export function CoverflowCarousel({
   </p>
 )}
           {active.meta && active.meta.length > 0 && (
-            <dl className="mt-3 sm:mt-10 w-full max-w-[230px] text-[12px]">
+            <dl className="mt-5 sm:mt-10 w-full max-w-[230px] text-[12px]">
               {active.meta.map((row) => (
                 <div key={row.label} className="flex justify-between py-[2px]">
                  <dt className="text-white/40">{row.label}</dt>
@@ -290,7 +290,7 @@ export function CoverflowCarousel({
       )}
 
       {showPagination && (
-        <div className="mt-4 sm:mt-6 flex items-center justify-center gap-2">
+        <div className="mt-3 sm:mt-6 flex items-center justify-center gap-2">
           {slides.map((_, index) => (
             <button key={index} type="button" aria-label={`Go to slide ${index + 1}`} aria-current={index === selected} onClick={() => goTo(index)} className={cn("size-2 rounded-full bg-foreground transition-opacity", index === selected ? "opacity-100" : "opacity-30")} />
           ))}

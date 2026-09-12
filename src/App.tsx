@@ -27,6 +27,7 @@ import Users from "./pages/admin/Users";
 import LoginPage from "@/pages/LoginPage";
 import SignupPage from "@/pages/SignupPage";
 import { SilkBackground } from "./components/ui/silk-background-animation";
+import ResetPasswordPage from "@/pages/ResetPasswordPage";
 
 function App() {
   const location = useLocation();
@@ -161,6 +162,11 @@ function App() {
                     element={<Users />}
                   />
                 </Route>
+
+                <Route
+  path="/reset-password"
+  element={<ResetPasswordPage />}
+/>
 
                 {/* ================= 404 ================= */}
                 <Route

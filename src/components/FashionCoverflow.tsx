@@ -43,7 +43,7 @@ const slides: CoverflowSlide[] = [
 
 export default function FashionCoverflow() {
   return (
-   <section className="overflow-hidden px-4 pt-0 pb-6 text-white sm:px-6 sm:pt-6 sm:pb-10 lg:px-10">
+   <section className="overflow-hidden px-4 pt-12 pb-6 text-white sm:px-6 sm:pt-10 sm:pb-10 lg:px-10">
       <div className="mx-auto max-w-[1280px]">
         <div className="grid items-start gap-2 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
           <motion.div
